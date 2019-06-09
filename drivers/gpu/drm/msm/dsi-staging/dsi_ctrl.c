@@ -1723,12 +1723,6 @@ static int dsi_enable_io_clamp(struct dsi_ctrl *dsi_ctrl,
 		dsi_ctrl->hw.ops.clamp_disable(&dsi_ctrl->hw,
 			lanes, ulps_enabled);
 
-	dsi_ctrl->hw.cont_splash_enabled = of_property_read_bool(of_node,
-					"qcom,cont-splash-enabled");
-
-	dsi_ctrl->hw.link_hsclk_fullrec = of_property_read_bool(of_node,
-				"qcom,link-hs-clk-always-full-reconfigure");
-
 	return 0;
 }
 
@@ -1764,14 +1758,11 @@ static int dsi_ctrl_dts_parse(struct dsi_ctrl *dsi_ctrl,
 	dsi_ctrl->split_link_supported = of_property_read_bool(of_node,
 					"qcom,split-link-supported");
 
-	rc = of_property_read_u32(of_node, "frame-threshold-time-us",
-			&frame_threshold_time_us);
-	if (rc) {
-		pr_debug("frame-threshold-time not specified, defaulting\n");
-		frame_threshold_time_us = 2666;
-	}
+	dsi_ctrl->hw.cont_splash_enabled = of_property_read_bool(of_node,
+					"qcom,cont-splash-enabled");
 
-	dsi_ctrl->frame_threshold_time_us = frame_threshold_time_us;
+	dsi_ctrl->hw.link_hsclk_fullrec = of_property_read_bool(of_node,
+				"qcom,link-hs-clk-always-full-reconfigure");
 
 	return 0;
 }
