@@ -231,6 +231,8 @@ struct dsi_panel {
 	enum dsi_panel_physical_type panel_type;
 #ifdef CONFIG_DRM_SDE_SPECIFIC_PANEL
 	struct panel_specific_pdata *spec_pdata;
+	struct delayed_work hbm_protect_work;
+	int touch_type;
 #endif /* CONFIG_DRM_SDE_SPECIFIC_PANEL */
 };
 
